@@ -16,6 +16,7 @@ app.use(bodyparser.json());
 //https://ipuresult.com/collegerank.php
 
 
+//Convert Cookie from the headers to a String
 function mkdataCookie(cookie) {
     var t, j;
     cookie = cookie.toString().replace(/,([^ ])/g, ",[12],$1").split(",[12],");
@@ -42,46 +43,13 @@ function dataCookieToString(dataCookie) {
     return t;
 } 
 
-//Receiving the cookie and then sending it in headers
+// Receiving the cookie and then sending it in headers
+//Getting the whole result
 var form = new FormData();
 
-form.append('Roll_No', '40514803115');
-form.submit("https://ipuresult.com/index.php", function(err, response)   {
-    response.resume();
-    cookie = mkdataCookie(response.headers['set-cookie']);
-    cookieString = dataCookieToString(cookie);
-    console.log(cookieString);
-
-    // request({
-    //     url: "http://ipuresult.com/student_marks.php",
-    //     method: "GET",
-    //     headers: {'Cookie': cookieString}
-    //     }, function(error, response, body)  {
-    //         // console.log(response.body);
-    //         $ = cheerio.load(response.body);
-    //         $('.page td').each(function()   {
-    //             console.log($(this).text());
-    //         });
-    // });
-    request({
-        url: "https://ipuresult.com/collegerank.php",
-        method: "GET",
-        headers: {'Cookie': cookieString}
-        }, function(error, response, body)  {
-            console.log(response.body);
-            // $ = cheerio.load(response.body);
-            // $('.page a').each(function()   {
-                // console.log($(this).text());
-            // });
-    });
-});
-
-
-// request({
-//     url: "https://ipuresult.com/index.php",
-//     method: "PUT",
-//     json: true,
-// }, function(error, response, body)  {
+// form.append('Roll_No', '40514803115');
+// form.submit("https://ipuresult.com/index.php", function(err, response)   {
+//     response.resume();
 //     cookie = mkdataCookie(response.headers['set-cookie']);
 //     cookieString = dataCookieToString(cookie);
 //     console.log(cookieString);
@@ -90,26 +58,57 @@ form.submit("https://ipuresult.com/index.php", function(err, response)   {
 //         url: "http://ipuresult.com/student_marks.php",
 //         method: "GET",
 //         headers: {'Cookie': cookieString}
-//     }, function(error, response, body)  {
-//         console.log(response.body);
-//     })
+//         }, function(error, response, body)  {
+//             // console.log(response.body);
+//             $ = cheerio.load(response.body);
+//             $('.page td').each(function()   {
+//                 console.log($(this).text());
+//             });
+//     });
 // });
 
 
+//To get College Rank
+form.append('Roll_No', '40514803115');
+form.submit("https://ipuresult.com/index.php", function(err, response)   {
+    response.resume();
+    cookie = mkdataCookie(response.headers['set-cookie']);
+    cookieString = dataCookieToString(cookie);
+    console.log(cookieString);
 
+    request({
+        url: "https://ipuresult.com/beforecr.php",
+        method: "GET",
+        headers: {'Cookie': cookieString}
+        }, function(error, response, body)  {
+            var item = [];
+            $ = cheerio.load(response.body);
+            $('.page b a').each(function()   {
+                console.log($(this).text());
+            });
+    });
+});
 
+//To get University Rank
+form.append('Roll_No', '40514803115');
+form.submit("https://ipuresult.com/index.php", function(err, response)   {
+    response.resume();
+    cookie = mkdataCookie(response.headers['set-cookie']);
+    cookieString = dataCookieToString(cookie);
+    console.log(cookieString);
 
-
-
-// request({
-//     url: "http://ipuresult.com/student_marks.php",
-//     method: "GET",
-//     headers: {'Cookie' : 'PHPSESSID=c9574119b3921e734c0e6598886b2662'},
-//     json: true,
-//     // body: myJSONObject
-// }, function (error, response, body){
-//     console.log(response.body);
-// });
+    request({
+        url: "https://ipuresult.com/beforeur.php",
+        method: "GET",
+        headers: {'Cookie': cookieString}
+        }, function(error, response, body)  {
+            var item = [];
+            $ = cheerio.load(response.body);
+            $('.page b a').each(function()   {
+                console.log($(this).text());
+            });
+    });
+});
 
 
 var server = app.listen(3000, function() {

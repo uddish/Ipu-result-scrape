@@ -1,0 +1,21 @@
+{
+  "name": "basic-scrape-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scrape.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "path": "^0.12.7",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "zombie": "^5.0.5"
+  }
+}

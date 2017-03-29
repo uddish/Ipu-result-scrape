@@ -12,8 +12,8 @@ var FormData = require('form-data');
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 
-//https://ipuresult.com/index.php
-//https://ipuresult.com/student_marks.php
+//https://ipuresult.com/beforecr.php
+//https://ipuresult.com/collegerank.php
 
 
 function mkdataCookie(cookie) {
@@ -52,16 +52,27 @@ form.submit("https://ipuresult.com/index.php", function(err, response)   {
     cookieString = dataCookieToString(cookie);
     console.log(cookieString);
 
+    // request({
+    //     url: "http://ipuresult.com/student_marks.php",
+    //     method: "GET",
+    //     headers: {'Cookie': cookieString}
+    //     }, function(error, response, body)  {
+    //         // console.log(response.body);
+    //         $ = cheerio.load(response.body);
+    //         $('.page td').each(function()   {
+    //             console.log($(this).text());
+    //         });
+    // });
     request({
-        url: "http://ipuresult.com/student_marks.php",
+        url: "https://ipuresult.com/collegerank.php",
         method: "GET",
         headers: {'Cookie': cookieString}
         }, function(error, response, body)  {
-            // console.log(response.body);
-            $ = cheerio.load(response.body);
-            $('.page td').each(function()   {
-                console.log($(this).text());
-            });
+            console.log(response.body);
+            // $ = cheerio.load(response.body);
+            // $('.page a').each(function()   {
+                // console.log($(this).text());
+            // });
     });
 });
 

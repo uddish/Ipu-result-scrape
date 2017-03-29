@@ -47,18 +47,18 @@ var Browser = require('zombie');
 
 // })
 
-request('http://it.mait.ac.in/index.php/people/faculty', function(err, res, body)   {
-    if(err) {
-        throw err;
-    }
+// request('http://it.mait.ac.in/index.php/people/faculty', function(err, res, body)   {
+//     if(err) {
+//         throw err;
+//     }
 
-// //Scrapes all the faculty names
-    $ = cheerio.load(body);
-    $('.article-content td a').each(function()  {
-        console.log($(this).text());
-    })
+// // //Scrapes all the faculty names
+//     $ = cheerio.load(body);
+//     $('.article-content td a').each(function()  {
+//         console.log($(this).text());
+//     })
 
-});
+// });
 
 // request('https://ipuresult.com/', function(err, res, body)   {
 //     if(err) {

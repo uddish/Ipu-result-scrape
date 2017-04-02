@@ -70,14 +70,16 @@ function scrape()    {
 
     //Scraping all the B.Tech notices from ipu.ac.in
     this.getBtechNotices = function(res){
-        
+        var notice = [];
         request('http://www.ipu.ac.in/exam_notices.php', function(err, res, body)   {
             if(err) {
                 throw err;
             }
-            var notice = [];
-            var noticeLink = [];
             $ = cheerio.load(body);
+                noticeObject = {
+                name: '', 
+                url: ''
+            }
             $('.table-box td [href]').each(function()   {
                 var content = $(this);
                 var contentText = content.text();
@@ -85,18 +87,20 @@ function scrape()    {
                 var txt = 'B. Tech';
                 var txt1 = 'B.Tech';
                 if(contentText.indexOf(txt) > -1 || contentText.indexOf(txt) > -1)   {
-                    notice.push(contentText);
-                    noticeLink.push(content.attr('href'))
+                    // notice.push(contentText);
+                    // noticeLink.push(content.attr('href'))
+                    noticeObject.name = contentText;
+                    noticeObject.url = content.attr('href');
+                    notice.push(noticeObject);
+                    noticeObject = {
+                    name: '', 
+                    url: ''
+                    }
                 };
                 console.log(notice);
             });
-            // noticeObject = {};
-            // for(j = 0; j < item.length; j++) {
-                // noticeObject[(j+1)] = item[j];
-            // }
-            // console.log(noticeObject);
         });   
-        // setTimeout((function() {res.send(noticeObject)}), 3000);
+        setTimeout((function() {res.send(notice)}), 3000);
     }
 }
 
